@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.NewsService.WebPL", "E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.NewsService.BLL", "Epam.NewsService.BLL\Epam.NewsService.BLL.csproj", "{9AE4CE95-6C3A-4601-AC13-A70073ADA772}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.NewsService.DAL", "Epam.NewsService.DAL\Epam.NewsService.DAL.csproj", "{5CAA66D5-9402-46A3-8AF4-2A9EF5159D7E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.NewsService.SqlDAL", "Epam.NewsService.DAL\Epam.NewsService.SqlDAL.csproj", "{5CAA66D5-9402-46A3-8AF4-2A9EF5159D7E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.NewsService.BLL.Interfaces", "Epam.NewsService.BLL.Interfaces\Epam.NewsService.BLL.Interfaces.csproj", "{6ECCF7C4-D943-4C55-96E7-76A91773225A}"
 EndProject
