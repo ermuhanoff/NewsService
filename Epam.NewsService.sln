@@ -5,17 +5,17 @@ VisualStudioVersion = 16.0.31112.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.NewsService.WebPL", "Epam.NewsService.WebPL\Epam.NewsService.WebPL.csproj", "{7454B8F2-E64A-4BA9-BD3D-EB6618FEDB27}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.NewsService.BLL", "Epam.NewsService.BLL\Epam.NewsService.BLL.csproj", "{9AE4CE95-6C3A-4601-AC13-A70073ADA772}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Epam.NewsService.BLL", "Epam.NewsService.BLL\Epam.NewsService.BLL.csproj", "{9AE4CE95-6C3A-4601-AC13-A70073ADA772}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.NewsService.SqlDAL", "Epam.NewsService.DAL\Epam.NewsService.SqlDAL.csproj", "{5CAA66D5-9402-46A3-8AF4-2A9EF5159D7E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Epam.NewsService.BLL.Interfaces", "Epam.NewsService.BLL.Interfaces\Epam.NewsService.BLL.Interfaces.csproj", "{6ECCF7C4-D943-4C55-96E7-76A91773225A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.NewsService.BLL.Interfaces", "Epam.NewsService.BLL.Interfaces\Epam.NewsService.BLL.Interfaces.csproj", "{6ECCF7C4-D943-4C55-96E7-76A91773225A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Epam.NewsService.DAL.Interfaces", "Epam.NewsService.DAL.Interfaces\Epam.NewsService.DAL.Interfaces.csproj", "{EFA293FE-6106-46ED-9E53-5CD08A5A5A5B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.NewsService.DAL.Interfaces", "Epam.NewsService.DAL.Interfaces\Epam.NewsService.DAL.Interfaces.csproj", "{EFA293FE-6106-46ED-9E53-5CD08A5A5A5B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Epam.NewsService.Dependencies", "Epam.NewsService.Dependencies\Epam.NewsService.Dependencies.csproj", "{9FBF8C6E-66C4-4089-BBBA-4353F8BCB18C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.NewsService.Dependencies", "Epam.NewsService.Dependencies\Epam.NewsService.Dependencies.csproj", "{9FBF8C6E-66C4-4089-BBBA-4353F8BCB18C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Epam.NewsService.Entities", "Epam.NewsService.Entities\Epam.NewsService.Entities.csproj", "{B8902715-ACC8-4941-822C-2378D14023DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.NewsService.Entities", "Epam.NewsService.Entities\Epam.NewsService.Entities.csproj", "{B8902715-ACC8-4941-822C-2378D14023DD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.NewsService.SqlDAL", "Epam.NewsService.SqlDAL\Epam.NewsService.SqlDAL.csproj", "{412AA4C7-E158-48AB-8641-303EEC03CFDF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,10 +31,6 @@ Global
 		{9AE4CE95-6C3A-4601-AC13-A70073ADA772}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9AE4CE95-6C3A-4601-AC13-A70073ADA772}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9AE4CE95-6C3A-4601-AC13-A70073ADA772}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5CAA66D5-9402-46A3-8AF4-2A9EF5159D7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5CAA66D5-9402-46A3-8AF4-2A9EF5159D7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5CAA66D5-9402-46A3-8AF4-2A9EF5159D7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5CAA66D5-9402-46A3-8AF4-2A9EF5159D7E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6ECCF7C4-D943-4C55-96E7-76A91773225A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6ECCF7C4-D943-4C55-96E7-76A91773225A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6ECCF7C4-D943-4C55-96E7-76A91773225A}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -51,6 +47,10 @@ Global
 		{B8902715-ACC8-4941-822C-2378D14023DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B8902715-ACC8-4941-822C-2378D14023DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B8902715-ACC8-4941-822C-2378D14023DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{412AA4C7-E158-48AB-8641-303EEC03CFDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{412AA4C7-E158-48AB-8641-303EEC03CFDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{412AA4C7-E158-48AB-8641-303EEC03CFDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{412AA4C7-E158-48AB-8641-303EEC03CFDF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

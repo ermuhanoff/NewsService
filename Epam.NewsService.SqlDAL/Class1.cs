@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Epam.NewsService.DAL
+namespace Epam.NewsService.SqlDAL
 {
     public class Class1
     {
