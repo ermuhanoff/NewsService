@@ -1,11 +1,17 @@
-﻿@{
-    if (IsAjax)
-    {
+﻿@using Epam.NewsService.Dependencies
 
-    }
-    if (IsPost)
+@{
+    if (User.Identity.IsAuthenticated)
     {
-
+        try
+        {
+            PageData["currentUser"] = DependencyResolver.Instance.UserLogic.GetUserByEmail(User.Identity.Name);
+        }
+        catch
+        {
+            FormsAuthentication.SignOut();
+            Response.Redirect("/");
+        }
     }
 }
 
@@ -20,8 +26,8 @@
         {
             <div class="d-flex flex-column">
                 <div class="d-flex align-items-center justify-content-between">
-                    <p class="fs-6 text-truncate" style="max-width: 150px">Oleg Paclovasdas</p>
-                    @if (User.IsInRole("moderator"))
+                    <p class="fs-6 text-truncate" style="max-width: 150px">@PageData["currentUser"].FirstName @PageData["currentUser"].LastName</p>
+                    @if (PageData["currentUser"].IsModerator())
                     {
                         <p class="text-secondary text-warning ms-2" style="font-size: 0.7em">MODERATOR</p>
                     }
@@ -34,10 +40,12 @@
         }
     </div>
     <ul class="nav flex-column">
-        @for (int i = 0; i < 10; i++)
+        @foreach (var category in DependencyResolver.Instance.CategoryLogic.GetAllCategories())
         {
+            PageData["category_" + category.Id] = category;
+
             <li class="nav-item">
-                <a class="nav-link py-1 text-secondary left-menu-cat" aria-current="page" href="#">Active</a>
+                <a class="nav-link py-1 text-secondary left-menu-cat" aria-current="page" href="~/Views/Pages/Top?category=@category.Id">@category.Title</a>
             </li>
         }
     </ul>

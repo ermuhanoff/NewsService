@@ -1,4 +1,6 @@
-﻿@{
+﻿@using Epam.NewsService.Dependencies
+
+@{
     Layout = "~/Views/Layouts/_BasicLayout.cshtml";
 
     PageData["pageName"] = "Account creation";
@@ -8,11 +10,34 @@
         lastNameInvalinMsg = "Please enter valid last name!",
         passInvalinMsg = " Please enter valid password!";
 
-    string email = "", password = "", firstname = "", lastname = "";
+    string email = Request["email"],
+        password = Request["password"],
+        firstname = Request["firstname"],
+        lastname = Request["lastname"];
+
+    bool isCreationError = false;
+
+    if (User.Identity.IsAuthenticated)
+    {
+        Response.Redirect("/");
+    }
 
     if (IsPost)
     {
-        
+        try
+        {
+            isCreationError = !DependencyResolver.Instance.UserLogic.AddUser(email, password, firstname, lastname, 0);
+        }
+        catch
+        {
+            Response.Redirect("~/Views/Pages/Error");
+        }
+
+        if (!isCreationError)
+        {
+            FormsAuthentication.SetAuthCookie(email, true);
+            Response.Redirect("/");
+        }
     }
 }
 
@@ -22,14 +47,14 @@
         <form class="needs-validation" action="~/Views/Pages/AccountCreation" method="post" novalidate>
             <div class="row mb-3">
                 <div class="col form-floating">
-                    <input value="@firstname" type="text" pattern="[A-Za-zА-Яа-я]{2,255}" class="form-control" id="firstname" placeholder="Firstname" required>
+                    <input name="firstname" value="" type="text" pattern="[A-Za-zА-Яа-я]{2,255}" class="form-control" id="firstname" placeholder="Firstname" required>
                     <label class="ps-4" for="firstname">First name</label>
                     <div class="invalid-feedback">
                         @firstNameInvalinMsg
                     </div>
                 </div>
                 <div class="col form-floating">
-                    <input value="@lastname" type="text" pattern="[A-Za-zА-Яа-я]{2,255}" class="form-control" id="lastname" placeholder="Lastname" required>
+                    <input name="lastname" value="" type="text" pattern="[A-Za-zА-Яа-я]{2,255}" class="form-control" id="lastname" placeholder="Lastname" required>
                     <label class="ps-4" for="lastname">Last name</label>
                     <div class="invalid-feedback">
                         @lastNameInvalinMsg
@@ -38,14 +63,14 @@
             </div>
             <div class="row mb-3">
                 <div class="col-7 form-floating">
-                    <input value="@email" type="email" pattern="\w{1,}@("@").\w{1,}" class="form-control" id="login" placeholder="name@example.com" required>
+                    <input name="email" value="" type="email" pattern="\w{1,}@("@")\w{1,}.\w{1,}" class="form-control" id="login" placeholder="name@example.com" required>
                     <label class="ps-4" for="login">Email address</label>
                     <div class="invalid-feedback">
                         @emailInvalinMsg
                     </div>
                 </div>
                 <div class="col form-floating">
-                    <input value="@password" type="password" pattern="\w{5,15}" class="form-control" id="password" placeholder="123" required>
+                    <input name="password" value="" type="password" pattern="\w{5,15}" class="form-control" id="password" placeholder="123" required>
                     <label class="ps-4" for="password">Password</label>
                     <div class="invalid-feedback">
                         @passInvalinMsg
@@ -57,4 +82,16 @@
             </div>
         </form>
     </div>
+
+    @if (isCreationError)
+    {
+        <div class="toast align-items-center text-white bg-danger bottom-0 start-0 border-0 show m-4 position-absolute" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    Creation account error!
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto toast-close-btn" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    }
 </section>

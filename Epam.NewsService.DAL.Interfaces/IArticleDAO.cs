@@ -10,8 +10,8 @@ namespace Epam.NewsService.DAL.Interfaces
         void EditArticle(int id, User moderator, string newText = null, string newTitle = null, string newIntroImageLink = null);
         Article GetArticleById(int id);
         IEnumerable<Article> GetAllArticles();
-        IEnumerable<Article> GetArticlesByCategory(Category category);
-        IEnumerable<Article> GetFollowArticles();
+        IEnumerable<Article> GetArticlesByCategory(int categoryId);
+        IEnumerable<Article> GetFollowArticles(int userId);
         IEnumerable<Article> GetArticlesByTitle(string title);
     }
 }

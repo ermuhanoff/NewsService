@@ -5,16 +5,39 @@
 
     PageData["pageName"] = "Follow news";
 
-    PageData["articles"] = DependencyResolver.Instance.ArticleLogic.GetFollowArticles();
 
-    if (IsPost)
+    if (User.Identity.IsAuthenticated)
     {
+        try
+        {
+            var user = DependencyResolver.Instance.UserLogic.GetUserByEmail(User.Identity.Name);
+            var categories = DependencyResolver.Instance.CategoryLogic.GetFollowCategoriesOfUser(user.Id);
 
+
+            foreach (var category in categories)
+            {
+                var newArticles = DependencyResolver.Instance.ArticleLogic.GetArticlesByCategory(category.Id);
+
+                if (PageData["articles"] == null)
+                {
+                    PageData["articles"] = newArticles;
+                }
+                else
+                {
+                    PageData["articles"] = newArticles.Concat((IEnumerable<Epam.NewsService.Entities.Article>)PageData["articles"]);
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Response.Redirect("~/Views/Pages/Error");
+        }
     }
-    else if (IsAjax)
+    else
     {
-
+        Response.Redirect("~/Views/Pages/SignIn");
     }
+
 }
 
 @section header{

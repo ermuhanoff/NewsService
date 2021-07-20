@@ -63,7 +63,7 @@ namespace Epam.NewsService.JsonDAL
             return JsonConvert.DeserializeObject<Article>(File.ReadAllText(GetFilePathById(id)));
         }
 
-        public IEnumerable<Article> GetArticlesByCategory(Category category)
+        public IEnumerable<Article> GetArticlesByCategory(int categoryId)
         {
             string[] files = Directory.GetFiles(JsonFilesPath);
             Article[] articles = new Article[files.Length];
@@ -71,7 +71,7 @@ namespace Epam.NewsService.JsonDAL
             for (int i = 0; i < files.Length; i++)
             {
                 var article = JsonConvert.DeserializeObject<Article>(File.ReadAllText(files[i]));
-                if (article.Category.Equals(category))
+                if (article.Category.Id == categoryId)
                 {
                     articles[i] = article;
                 }
@@ -85,7 +85,7 @@ namespace Epam.NewsService.JsonDAL
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Article> GetFollowArticles()
+        public IEnumerable<Article> GetFollowArticles(int userId)
         {
             return new List<Article>();
         }

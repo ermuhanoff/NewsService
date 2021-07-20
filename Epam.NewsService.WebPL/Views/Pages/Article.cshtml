@@ -1,17 +1,24 @@
 ﻿@using Epam.NewsService.Dependencies
 
 @{
-    Layout = "~/Views/Layouts/_BasicLayout.cshtml";
+    try
+    {
+        Layout = "~/Views/Layouts/_BasicLayout.cshtml";
 
-    int id;
+        int id;
 
-    Int32.TryParse(Request.Params["id"], out id);
+        Int32.TryParse(Request.Params["id"], out id);
 
-    var article = DependencyResolver.Instance.ArticleLogic.GetArticleById(id);
+        var article = DependencyResolver.Instance.ArticleLogic.GetArticleById(id);
 
-    PageData["pageName"] = article.Title;
+        PageData["pageName"] = article.Title;
+        PageData["article"] = article;
 
-    PageData["article"] = article;
+    }
+    catch
+    {
+        Response.Redirect("~/Views/Pages/Error");
+    }
 }
 
 @section header{

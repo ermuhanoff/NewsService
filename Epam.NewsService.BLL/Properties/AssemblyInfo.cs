@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // Общие сведения об этой сборке предоставляются следующим набором
 // набора атрибутов. Измените значения этих атрибутов для изменения сведений,
 // связанные со сборкой.
-[assembly: AssemblyTitle("Epam.NewsServices.BLL")]
+[assembly: AssemblyTitle("Epam.NewsService.BLL")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Epam.NewsServices.BLL")]
+[assembly: AssemblyProduct("Epam.NewsService.BLL")]
 [assembly: AssemblyCopyright("Copyright ©  2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

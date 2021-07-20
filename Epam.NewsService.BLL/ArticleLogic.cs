@@ -20,9 +20,9 @@ namespace Epam.NewsService.BLL
             return _articleDAO.GetAllArticles();
         }
 
-        public IEnumerable<Article> GetFollowArticles()
+        public IEnumerable<Article> GetFollowArticles(int userId)
         {
-            return _articleDAO.GetFollowArticles();
+            return _articleDAO.GetFollowArticles(userId);
         }
 
         public bool AddArticle(Article article)
@@ -45,9 +45,9 @@ namespace Epam.NewsService.BLL
             return _articleDAO.RemoveArticle(id);
         }
 
-        public IEnumerable<Article> GetArticlesByCategory(Category category)
+        public IEnumerable<Article> GetArticlesByCategory(int categoryId)
         {
-            return _articleDAO.GetArticlesByCategory(category);
+            return _articleDAO.GetArticlesByCategory(categoryId);
         }
 
         public IEnumerable<Article> GetArticlesByTitle(string title)

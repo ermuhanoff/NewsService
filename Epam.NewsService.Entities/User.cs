@@ -5,23 +5,27 @@ namespace Epam.NewsService.Entities
 {
     public class User
     {
-        public User(int id, string firstName, string lastName, UserRole userRole)
+        public User(string login, string password, string firstName, string lastName, UserRole userRole)
         {
             FirstName = firstName;
             LastName = lastName;
-
-            Id = id;
+            Login = login;
+            Password = password;
             Role = userRole;
+
+            Id = -1;
             FollowCategories = new List<Category>();
         }
-        public User(string firstName, string lastName, UserRole userRole)
+
+        public User(int id, string login, string password, string firstName, string lastName, UserRole userRole, IEnumerable<Category> categories)
         {
             FirstName = firstName;
             LastName = lastName;
-
-            Id = 0;
+            Login = login;
+            Password = password;
             Role = userRole;
-            FollowCategories = new List<Category>();
+            Id = id;
+            FollowCategories = categories;
         }
 
         public enum UserRole
@@ -38,6 +42,16 @@ namespace Epam.NewsService.Entities
 
         public UserRole Role { get; }
 
-        public List<Category>  FollowCategories { get; set; }
+        public IEnumerable<Category>  FollowCategories { get; set; }
+
+        public string Login { get; set; }
+
+        public string Password { get; set; }
+
+
+        public string GetRoleString(UserRole role) => Enum.GetName(typeof(UserRole), role);
+        
+        public bool IsModerator() => Role == UserRole.MODERATOR;
+        
     }
 }

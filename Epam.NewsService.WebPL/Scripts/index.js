@@ -58,5 +58,11 @@
         }).fail(...data => {
             console.log(data);
         });
+    });
+
+    $(".toast-close-btn").click(e => {
+        let $toast = $($(e.target).closest(".toast"));
+
+        $toast.toggleClass("show");
     })
 });

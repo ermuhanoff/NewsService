@@ -76,6 +76,29 @@ namespace Epam.NewsService.SqlDAL
 
                 var reader = command.ExecuteReader();
 
+                while (reader.Read())
+                {
+                    yield return CreateArticleFromReader(reader);
+                }
+            }
+        }
+
+        public IEnumerable<Article> GetArticlesByCategory(int categoryId)
+        {
+            using (var _connection = new SqlConnection(_connectionString))
+            {
+                var stProc = "GetArticlesByCategory";
+
+                var command = new SqlCommand(stProc, _connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+
+                command.Parameters.AddWithValue("@CategoryId", categoryId);
+
+                _connection.Open();
+
+                var reader = command.ExecuteReader();
 
                 while (reader.Read())
                 {
@@ -84,12 +107,7 @@ namespace Epam.NewsService.SqlDAL
             }
         }
 
-        public IEnumerable<Article> GetArticlesByCategory(NewsService.Entities.Category category)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Article> GetFollowArticles()
+        public IEnumerable<Article> GetFollowArticles(int userId)
         {
             using (var _connection = new SqlConnection(_connectionString))
             {
@@ -147,23 +165,19 @@ namespace Epam.NewsService.SqlDAL
             throw new NotImplementedException();
         }
 
-        private Article CreateArticleFromReader(SqlDataReader reader)
+        public static Article CreateArticleFromReader(SqlDataReader reader)
         {
             return new Article(
                         (int)reader["ArticleId"],
                         (string)reader["Title"],
                         (string)reader["Text"],
-                        new User(
-                            (int)reader["UserId"],
-                            (string)reader["FirstName"],
-                            (string)reader["LastName"],
-                            (User.UserRole)reader["Role"]),
+                        SqlUserDAO.CreateUserFromReader(reader),
                         (string)reader["IntroImageLink"],
-                        new Category(
-                            (int)reader["CategoryId"],
-                            (string)reader["CategoryName"],
-                            (string)reader["CategoryDesc"]),
-                        new string[] { });
+                        SqlCategoryDAO.CreateCategoryFromReader(reader),
+                        new string[] { },
+                        (DateTime)reader["CreationTime"],
+                        new Comment[] { },
+                        (int)reader["Likes"]);
         }
     }
 }

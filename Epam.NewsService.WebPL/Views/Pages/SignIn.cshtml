@@ -1,11 +1,37 @@
-﻿@{
+﻿@using Epam.NewsService.Dependencies
+
+@{
     Layout = "~/Views/Layouts/_BasicLayout.cshtml";
 
     PageData["pageName"] = "SignIn";
 
     string emailInvalinMsg = "Please enter valid email!";
     string passInvalinMsg = " Please enter valid password!";
+
+    string login = Request["login"];
+    string password = Request["password"];
+
+    bool isAuthError = false;
+
+    try
+    {
+        if (IsPost)
+        {
+            var user = DependencyResolver.Instance.UserLogic.Authentication(login, password);
+
+            if (user != null)
+            {
+                FormsAuthentication.SetAuthCookie(login, createPersistentCookie: true);
+                Response.Redirect("/");
+            }
+        }
+    }
+    catch
+    {
+        isAuthError = true;
+    }
 }
+
 
 <section class="vh-100 vw-100 d-flex justify-content-center align-items-center">
     <div class="container" style="width: 400px">
@@ -13,26 +39,38 @@
         <form class="needs-validation" action="~/Views/Pages/SignIn" method="post" novalidate>
             <div>
                 <div class="form-floating mb-3">
-                    <input type="email" pattern="\w{1,}@("@").\w{1,}" class="form-control" id="login" placeholder="name@example.com" required>
+                    <input name="login" value="" type="email" pattern="\w{1,}@("@")\w{1,}.\w{1,}" class="form-control" id="login" placeholder="name@example.com" required>
                     <label for="login">Email address</label>
                     <div class="invalid-feedback">
-                       @emailInvalinMsg
+                        @emailInvalinMsg
                     </div>
                 </div>
-                
+
             </div>
             <div>
                 <div class="form-floating">
-                    <input type="password" pattern="\w{5,15}" class="form-control" id="password" placeholder="123" required>
+                    <input name="password" value="" type="password" pattern="\w{5,15}" class="form-control" id="password" placeholder="123" required>
                     <label for="password">Password</label>
                     <div class="invalid-feedback">
                         @passInvalinMsg
                     </div>
-                </div>  
+                </div>
             </div>
             <div class="mt-3">
                 <button class="btn btn-dark" type="submit">SignIn</button>
             </div>
         </form>
     </div>
+
+    @if (isAuthError)
+    {
+        <div class="toast align-items-center text-white bg-danger bottom-0 start-0 border-0 show m-4 position-absolute" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    Authentication error!.
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto toast-close-btn" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    }
 </section>

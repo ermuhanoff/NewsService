@@ -1,40 +1,48 @@
 ﻿using Epam.NewsService.DAL.Interfaces;
 using Epam.NewsService.Entities;
+using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
 
 namespace Epam.NewsService.SqlDAL
 {
-    class SqlUserDAO : IUserDAO
+    public class SqlUserDAO : IUserDAO
     {
         private static string _connectionString = ConfigurationManager.ConnectionStrings["default"].ConnectionString;
 
-        public bool AddUser(User user)
+        public bool AddUser(User newUser)
         {
-            using (var _connection = new SqlConnection(_connectionString))
+            try
             {
-                var stProc = "AddUser";
+                GetUserByEmail(newUser.Login);
 
-                var command = new SqlCommand(stProc, _connection)
+                return false;
+            }
+            catch
+            {
+                using (var _connection = new SqlConnection(_connectionString))
                 {
-                    CommandType = System.Data.CommandType.StoredProcedure
-                };
+                    var stProc = "AddUser";
 
-                command.Parameters.AddWithValue("@Id", user.Id);
+                    var command = new SqlCommand(stProc, _connection)
+                    {
+                        CommandType = System.Data.CommandType.StoredProcedure
+                    };
 
-                command.Parameters.AddWithValue("@Text", article.Text);
-                command.Parameters.AddWithValue("@Title", article.Title);
-                command.Parameters.AddWithValue("@CreationTime", article.CreationTime);
-                command.Parameters.AddWithValue("@ModeratorId", article.Moderator.Id);
-                command.Parameters.AddWithValue("@IntroImageLink", article.Moderator.Id);
-                command.Parameters.AddWithValue("@CategoryId", article.Category.Id);
-                command.Parameters.AddWithValue("@Likes", article.Likes);
+                    command.Parameters.AddWithValue("@Login", newUser.Login);
+                    command.Parameters.AddWithValue("@Password", newUser.Password);
+                    command.Parameters.AddWithValue("@FirstName", newUser.FirstName);
+                    command.Parameters.AddWithValue("@LastName", newUser.LastName);
+                    command.Parameters.AddWithValue("@Role", newUser.Role);
 
-                _connection.Open();
+                    _connection.Open();
 
-                var result = command.ExecuteNonQuery();
+                    var result = command.ExecuteNonQuery();
 
-                return result > 0;
+                    return result > 0;
+                }
+
             }
         }
 
@@ -43,14 +51,100 @@ namespace Epam.NewsService.SqlDAL
             throw new System.NotImplementedException();
         }
 
-        public User GetById(int id)
+        public User GetUserById(int id)
         {
-            throw new System.NotImplementedException();
+            using (var _connection = new SqlConnection(_connectionString))
+            {
+                var stProc = "GetUserById";
+
+                var command = new SqlCommand(stProc, _connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+
+                command.Parameters.AddWithValue("@Id", id);
+
+                _connection.Open();
+
+                var reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    return CreateUserFromReader(reader);
+                }
+
+                throw new InvalidOperationException("Cannot find user with ID = " + id);
+            }
+        }
+
+        public User GetUserByEmail(string email)
+        {
+            using (var _connection = new SqlConnection(_connectionString))
+            {
+                var stProc = "GetUserByEmail";
+
+                var command = new SqlCommand(stProc, _connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+
+                command.Parameters.AddWithValue("@Email", email);
+
+                _connection.Open();
+
+                var reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    return CreateUserFromReader(reader);
+                }
+
+                throw new InvalidOperationException("Cannot find user with email = " + email);
+            }
+        }
+
+        public User Authentication(string email, string password)
+        {
+            using (var _connection = new SqlConnection(_connectionString))
+            {
+                var stProc = "Authentication";
+
+                var command = new SqlCommand(stProc, _connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+
+                command.Parameters.AddWithValue("@Email", email);
+                command.Parameters.AddWithValue("@Password", password);
+
+                _connection.Open();
+
+                var reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    return CreateUserFromReader(reader);
+                }
+
+                throw new InvalidOperationException("Cannot find user with email = " + email + " and password = " + password);
+            }
         }
 
         public bool RemoveUser(int id)
         {
             throw new System.NotImplementedException();
+        }
+
+        public static User CreateUserFromReader(SqlDataReader reader)
+        {
+            return new User(
+                (int)reader["UserId"],
+                (string)reader["Login"],
+                (string)reader["Password"],
+                (string)reader["FirstName"],
+                (string)reader["LastName"],
+                (User.UserRole)reader["Role"],
+                new List<Category>());
         }
     }
 }

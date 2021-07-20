@@ -70,15 +70,11 @@ namespace Epam.NewsService.SqlDAL
             throw new NotImplementedException();
         }
 
-        private Comment CreateCommentFromReader(SqlDataReader reader)
+        public static Comment CreateCommentFromReader(SqlDataReader reader)
         {
             return new Comment(
                 (int)reader["CommentId"],
-                new User(
-                    (int)reader["UserId"],
-                    (string)reader["FirstName"],
-                    (string)reader["LastName"],
-                    (User.UserRole)reader["Role"]),
+                SqlUserDAO.CreateUserFromReader(reader),
                 (DateTime)reader["CreationTime"],
                 (DateTime)reader["EditedTime"],
                 (string)reader["Content"]);

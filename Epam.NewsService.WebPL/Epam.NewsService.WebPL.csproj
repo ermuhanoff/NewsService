@@ -117,7 +117,6 @@
     <Content Include="Views\Partials\_HeaderMenuPartial.cshtml" />
     <Content Include="Views\Partials\_LeftMenuPartial.cshtml" />
     <Content Include="Views\Partials\_ArticlePartial.cshtml" />
-    <Content Include="Actions\TopMenuNewsAction.cshtml" />
     <Content Include="Actions\LikeComment.cshtml" />
     <Content Include="Actions\LikeArticle.cshtml" />
     <Content Include="Actions\SignOut.cshtml" />
@@ -130,7 +129,6 @@
     <Content Include="Views\Layouts\_BasicLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FilterConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

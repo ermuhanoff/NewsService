@@ -1,4 +1,6 @@
-﻿@{
+﻿@using Epam.NewsService.Dependencies
+
+@{
     bool isArticlesEmpty = true;
 }
 
@@ -9,6 +11,20 @@
     <div class="container-fluid p-0 m-0 mt-2" style="max-width: 60% ; min-width: 400px">
         @RenderPage("~/Views/Partials/_TopMenuPartial.cshtml")
 
+        @if (Request.Params["category"] != null)
+        {
+            try
+            {
+                int id = -1;
+                Int32.TryParse(Request.Params["category"], out id);
+
+                <p class="fs-4 py-3">Articles in category '@DependencyResolver.Instance.CategoryLogic.GetCategoryById(id).Title'</p>
+            }
+            catch
+            {
+                Response.Redirect("~/Views/Pages/Error");
+            }
+        }
         @if (Request.Params["id"] == null)
         {
             <ul class="list-group">
@@ -44,7 +60,7 @@
                         <button class="btn btn-dark" type="submit">Send</button>
                     </form>
                     <p class="fs-3 py-4">Comments:</p>
-                    for (var i = 0; i < 10; i++)
+                    for (int i = 0; i < 10; i++)
                     {
                         @RenderPage("~/Views/Partials/_CommentPartial.cshtml")
                     }

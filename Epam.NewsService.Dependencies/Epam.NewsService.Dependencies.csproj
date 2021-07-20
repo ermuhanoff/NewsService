@@ -49,6 +49,10 @@
       <Project>{8979c481-31fd-41d7-b316-7aeb033304e9}</Project>
       <Name>Epam.NewsService.BLL.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Epam.NewsService.BLL\Epam.NewsService.BLL.csproj">
+      <Project>{690F7075-8EA4-4DB2-9F3E-6538A7BB47FB}</Project>
+      <Name>Epam.NewsService.BLL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Epam.NewsService.DAL.Interfaces\Epam.NewsService.DAL.Interfaces.csproj">
       <Project>{b41df47e-b217-4f8a-b7a1-b9c09b26ff7f}</Project>
       <Name>Epam.NewsService.DAL.Interfaces</Name>
@@ -60,10 +64,6 @@
     <ProjectReference Include="..\Epam.NewsService.SqlDAL\Epam.NewsService.SqlDAL.csproj">
       <Project>{34F9619F-5552-4CC3-A99B-D466CD2BAF9A}</Project>
       <Name>Epam.NewsService.SqlDAL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Epam.NewsServices.BLL\Epam.NewsServices.BLL.csproj">
-      <Project>{690F7075-8EA4-4DB2-9F3E-6538A7BB47FB}</Project>
-      <Name>Epam.NewsServices.BLL</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

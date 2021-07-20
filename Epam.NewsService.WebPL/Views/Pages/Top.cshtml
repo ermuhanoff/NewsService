@@ -5,7 +5,25 @@
 
     PageData["pageName"] = "Top news";
 
-    PageData["articles"] = DependencyResolver.Instance.ArticleLogic.GetAllArticles();
+    try
+    {
+        if (Request["category"] != null)
+        {
+            int id = -1;
+
+            Int32.TryParse(Request["category"], out id);
+
+            PageData["articles"] = DependencyResolver.Instance.ArticleLogic.GetArticlesByCategory(id);
+        }
+        else
+        {
+            PageData["articles"] = DependencyResolver.Instance.ArticleLogic.GetAllArticles();
+        }
+    }
+    catch
+    {
+        Response.Redirect("~/Views/Pages/Error");
+    }
 }
 
 @section header{
