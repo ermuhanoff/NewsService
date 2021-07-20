@@ -2,6 +2,7 @@
 
 @{
     bool isArticlesEmpty = true;
+    bool isCommentsEmpty = true;
 }
 
 <section class="d-flex p-2 mt-3 justify-content-start">
@@ -54,15 +55,39 @@
             <div class="pb-2">
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <form action="/" method="post">
-                        <label for="comment-content" class="form-label fs-3 py-4">Add new comment:</label>
-                        <textarea class="form-control mb-3" id="comment-content" rows="3" value=""></textarea>
-                        <button class="btn btn-dark" type="submit">Send</button>
+                    <p class="fs-3 pt-4">Article actions</p>
+                    <div class="d-flex">
+                        <a href="~/Views/Pages/AddArticle" class="btn btn-dark me-3">Edit</a>
+                        <a href="~/Actions/RemoveArticle?article=@PageData["article"].Id" class="btn btn-outline-danger">Remove</a>
+                    </div>
+                    <form action="~/Actions/AddComment?articleId=@PageData["article"].Id" class="needs-validation" method="post" novalidate>
+                        <label for="comment-content" class="form-label fs-3 py-4">Add new comment</label>
+                        <textarea class="form-control mb-3" id="comment-content" rows="3" value="" required></textarea>
+                        <div class="invalid-feedback">
+                            Please enter valid comment text!
+                        </div>
+                        <button class="btn btn-dark comment-send-btn" type="submit">Send</button>
                     </form>
-                    <p class="fs-3 py-4">Comments:</p>
-                    for (int i = 0; i < 10; i++)
+                    <p class="fs-3 py-4">Comments</p>
+
+                    try
                     {
-                        @RenderPage("~/Views/Partials/_CommentPartial.cshtml")
+                        foreach (var comment in DependencyResolver.Instance.CommentLogic.GetCommentsByArticleId((int)PageData["article"].Id))
+                        {
+                            isCommentsEmpty = false;
+
+                            PageData["comment"] = comment;
+
+                            @RenderPage("~/Views/Partials/_CommentPartial.cshtml")
+                        }
+                    }
+                    catch
+                    {
+                        Response.Redirect("~/Views/Pages/Error");
+                    }
+                    if (isCommentsEmpty)
+                    {
+                        <p>No comments on this article</p>
                     }
                 }
                 else

@@ -37,14 +37,17 @@
     $(".comment-like-btn").click(e => {
         e.preventDefault();
 
-        let $a = $(e.target);
+        let $a = $(e.currentTarget);
         let action = $a.attr("href");
+        let type = 0;
 
-        $.post(action).done(...data => {
-            console.log(data);
-        }).fail(...data => {
-            console.log(data);
-        });
+        if ($a.hasClass("like-active")) {
+            type = 1;
+        }
+
+        $.post(action + "?type=" + type).done(() => {
+            $a.toggleClass("like-active");
+        }).fail(data => {});
     });
 
     $(".article-like-btn").click(e => {
@@ -64,5 +67,19 @@
         let $toast = $($(e.target).closest(".toast"));
 
         $toast.toggleClass("show");
-    })
+    });
+
+    $(".comment-send-btn").click(e => {
+        e.preventDefault();
+
+        let $btn = $(e.target);
+        let $form = $($btn.closest("form"));
+        let $textarea = $($form.find("textarea"));
+
+        console.log($textarea);
+
+        $.post($form.attr("action"), { content: $textarea.val() }).done(() => {
+            location.reload();
+        }).fail();
+    });
 });

@@ -1,12 +1,12 @@
 ﻿<div class="card mb-2">
     <div class="card-body">
-        <p class="card-title">Oleg P</p>
-        <p class="card-subtitle mb-2 text-muted" style="font-size: 0.7em">@DateTime.Now</p>
-        <p class="card-text mb-2">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <p class="card-title">@PageData["comment"].Author.FirstName  @PageData["comment"].Author.LastName</p>
+        <p class="card-subtitle mb-2 text-muted" style="font-size: 0.7em">@PageData["comment"].CreationTime</p>
+        <p class="card-text mb-2">@PageData["comment"].Content</p>
         <a href="~/Actions/LikeComment" class="position-relative text-dark comment-like-btn">
             <i data-feather="heart" style="width: 16px"></i>
             <span class="position-absolute top-100 start-100 translate-middle badge rounded-pill text-dark">
-                @PageData["article"].Likes
+                @PageData["comment"].Likes
             </span>
         </a>
     </div>

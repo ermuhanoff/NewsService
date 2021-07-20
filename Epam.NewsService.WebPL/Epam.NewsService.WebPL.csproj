@@ -120,6 +120,8 @@
     <Content Include="Actions\LikeComment.cshtml" />
     <Content Include="Actions\LikeArticle.cshtml" />
     <Content Include="Actions\SignOut.cshtml" />
+    <Content Include="Actions\RemoveArticle.cshtml" />
+    <Content Include="Actions\AddComment.cshtml" />
     <None Include="Scripts\jquery-3.6.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.6.0.js" />
     <Content Include="Scripts\jquery-3.6.0.min.js" />
@@ -169,6 +171,7 @@
     <Content Include="Views\Pages\Search.cshtml" />
     <Content Include="Views\Pages\About.cshtml" />
     <Content Include="Views\Partials\_CommentPartial.cshtml" />
+    <Content Include="Views\Pages\AddArticle.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

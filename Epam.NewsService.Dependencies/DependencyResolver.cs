@@ -25,9 +25,11 @@ namespace Epam.NewsService.Dependencies
         public IArticleDAO ArtilceDAO => new SqlArticleDAO();
         public IUserDAO UserDAO => new SqlUserDAO();
         public ICategoryDAO CategoryDAO => new SqlCategoryDAO();
+        public ICommentDAO CommentDAO => new SqlCommentDAO();
 
         public IArticleLogic ArticleLogic => new ArticleLogic(ArtilceDAO);
         public IUserLogic UserLogic => new UserLogic(UserDAO);
         public ICategoryLogic CategoryLogic => new CategoryLogic(CategoryDAO);
+        public ICommentLogic CommentLogic => new CommentLogic(CommentDAO);
     }
 }

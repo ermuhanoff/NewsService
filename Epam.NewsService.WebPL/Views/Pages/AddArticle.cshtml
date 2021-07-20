@@ -1,0 +1,123 @@
+﻿@using Epam.NewsService.Dependencies
+
+@{
+    Layout = "~/Views/Layouts/_BasicLayout.cshtml";
+
+    PageData["pageName"] = "Add new article";
+
+    string imageLinkInvalidMsg = "Please enter valid image link!";
+    string categoryInvalidMsg = "Please choose valid category!";
+    string titleInvalidMsg = "Please enter valid title!";
+    string textInvalidMsg = "Please enter valid text!";
+
+
+
+    bool isCreationArticleError = false;
+
+    if (!User.Identity.IsAuthenticated)
+    {
+        Response.Redirect("/");
+    }
+
+    if (IsPost)
+    {
+        try
+        {
+            string title = Request["title"];
+            string text = Request["text"];
+            string imageLink = Request["imagelink"];
+            int categoryId = -1;
+
+            Int32.TryParse(Request["category"], out categoryId);
+
+            var category = DependencyResolver.Instance.CategoryLogic.GetCategoryById(categoryId);
+            var user = DependencyResolver.Instance.UserLogic.GetUserByEmail(User.Identity.Name);
+
+            isCreationArticleError = !DependencyResolver.Instance.ArticleLogic.AddArticle(title, text, imageLink, category, user, new string[] { });
+        }
+        catch
+        {
+            Response.Redirect("~/Views/Pages/Error");
+        }
+    }
+}
+
+@section header{
+    @RenderPage("~/Views/Partials/_HeaderMenuPartial.cshtml")
+}
+
+<section class="d-flex justify-content-center align-items-center p-2 mt-3">
+    <div class="container" style="width: 60%">
+        <p class="fs-3 fw-bold">Add new article</p>
+        <form class="needs-validation" action="~/Views/Pages/AddArticle" method="post" novalidate>
+            <div class="row mb-4">
+                <div class="col">
+                    <label for="imagelink" class="form-label fs-5">Image link</label>
+                    <input name="imagelink" class="form-control" type="text" value="" id="imagelink" placeholder="Some intro image link..." required>
+                    <div class="invalid-feedback">
+                        @imageLinkInvalidMsg
+                    </div>
+                </div>
+                <div class="col">
+                    <label for="category" class="form-label fs-5">Category</label>
+                    <select name="category" class="form-select" id="category" required>
+                        @try
+                        {
+                            foreach (var category in DependencyResolver.Instance.CategoryLogic.GetAllCategories())
+                            {
+                                <option value="@category.Id">@category.Title</option>
+                            }
+                        }
+                        catch
+                        {
+                            Response.Redirect("~/Views/Pages/Error");
+                        }
+                    </select>
+                    <div class="invalid-feedback">
+                        @categoryInvalidMsg
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col">
+                    <label for="title" class="form-label fs-5">Article title</label>
+                    <input name="title" class="form-control" type="text" value="" id="title" placeholder="Some title..." required>
+                    <div class="invalid-feedback">
+                        @titleInvalidMsg
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col">
+                    <label for="text" class="form-label fs-5">Article text</label>
+                    <textarea name="text" class="form-control" type="text" value="" rows="3" id="text" placeholder="Some text..." required></textarea>
+                    <div class="invalid-feedback">
+                        @textInvalidMsg
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col d-flex">
+                    <div class="me-3">
+                        <button class="btn btn-dark" type="submit">Create</button>
+                    </div>
+                    <div>
+                        <a href="~/Views/Pages/User" class="btn btn-outline-dark">Back</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    @if (isCreationArticleError)
+    {
+        <div class="toast align-items-center text-white bg-danger bottom-0 start-0 border-0 show m-4 position-absolute" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    Creation account error!
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto toast-close-btn" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    }
+</section>

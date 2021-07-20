@@ -1,0 +1,20 @@
+﻿@using Epam.NewsService.Dependencies
+
+@{
+    bool isRemovedArticleError = false;
+
+    try
+    {
+        int articleId = -1;
+
+        Int32.TryParse(Request["article"], out articleId);
+
+        isRemovedArticleError = !DependencyResolver.Instance.ArticleLogic.RemoveArticle(articleId);
+    }
+    catch
+    {
+        Response.Redirect("~/Views/Pages/Error");
+    }
+
+    Response.Redirect("/");
+}

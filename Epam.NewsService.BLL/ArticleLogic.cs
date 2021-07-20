@@ -25,14 +25,14 @@ namespace Epam.NewsService.BLL
             return _articleDAO.GetFollowArticles(userId);
         }
 
-        public bool AddArticle(Article article)
+        public bool AddArticle(string title, string text, string introImageLink, Category category, User moderator, string[] tags)
         {
-            return _articleDAO.AddArticle(article);
+            return _articleDAO.AddArticle(new Article(title, text, moderator, introImageLink, category, tags));
         }
 
         public void EditArticle(int id, User moderator, string newText = null, string newTitle = null, string newIntroImageLink = null)
         {
-            _articleDAO.EditArticle(id, moderator,newText , newTitle, newIntroImageLink);
+            _articleDAO.EditArticle(id, moderator, newText, newTitle, newIntroImageLink);
         }
 
         public Article GetArticleById(int id)

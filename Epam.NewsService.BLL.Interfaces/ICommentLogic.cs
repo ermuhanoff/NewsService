@@ -1,11 +1,11 @@
 ﻿using Epam.NewsService.Entities;
 using System.Collections.Generic;
 
-namespace Epam.NewsService.DAL.Interfaces
+namespace Epam.NewsService.BLL.Interfaces
 {
-    public interface ICommentDAO
+    public interface ICommentLogic
     {
-        bool AddComment(Comment comment);
+        bool AddComment(string content, User author, int articleId);
         bool RemoveComment(int id);
         void EditComment(int id, string newText);
         bool LikeComment(int id);

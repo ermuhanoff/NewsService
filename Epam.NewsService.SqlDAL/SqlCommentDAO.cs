@@ -7,7 +7,7 @@ using System;
 
 namespace Epam.NewsService.SqlDAL
 {
-    class SqlCommentDAO : ICommentDAO
+    public class SqlCommentDAO : ICommentDAO
     {
         private static string _connectionString = ConfigurationManager.ConnectionStrings["default"].ConnectionString;
 
@@ -15,30 +15,65 @@ namespace Epam.NewsService.SqlDAL
         {
             using (var _connection = new SqlConnection(_connectionString))
             {
-                //var query = "INSERT INTO dbo.Articles(Text, Title, CreationTime, ModeratorId, IntroImageLink, CategoryId, Likes) " +
-                //    "VALUES(@Text, @Title, @CreationTime, @ModeratorId, @IntroImageLink, @CategoryId, @Likes)";
-                //var command = new SqlCommand(query, _connection);
+                var command = new SqlCommand("AddComment", _connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
 
-                //command.Parameters.AddWithValue("@Text", article.Text);
-                //command.Parameters.AddWithValue("@Title", article.Title);
-                //command.Parameters.AddWithValue("@CreationTime", article.CreationTime);
-                //command.Parameters.AddWithValue("@ModeratorId", article.Moderator.Id);
-                //command.Parameters.AddWithValue("@IntroImageLink", article.Moderator.Id);
-                //command.Parameters.AddWithValue("@CategoryId", article.Category.Id);
-                //command.Parameters.AddWithValue("@Likes", article.Likes);
+                command.Parameters.AddWithValue("@CreationTime", comment.GetDateTimeString(comment.CreationTime));
+                command.Parameters.AddWithValue("@EditedTime", comment.GetDateTimeString(comment.EditedTime));
+                command.Parameters.AddWithValue("@Content", comment.Content);
+                command.Parameters.AddWithValue("@UserId", comment.Author.Id);
+                command.Parameters.AddWithValue("@ArticleId", comment.ArticleId);
+                command.Parameters.AddWithValue("@Likes", comment.Likes);
 
-                //_connection.Open();
+                _connection.Open();
 
-                //var result = command.ExecuteNonQuery();
+                var result = command.ExecuteNonQuery();
 
-                //return result > 0;
-                return true;
+                return result > 0;
             }
         }
 
         public void EditComment(int id, string newText)
         {
             throw new System.NotImplementedException();
+        }
+
+        public bool LikeComment(int id)
+        {
+            using (var _connection = new SqlConnection(_connectionString))
+            {
+                var query = "UPDATE Comments SET Likes = Likes + 1 WHERE Comments.Id = @Id";
+
+                var command = new SqlCommand(query, _connection);
+
+                command.Parameters.AddWithValue("@Id", id);
+
+                _connection.Open();
+
+                var result = command.ExecuteNonQuery();
+
+                return result > 0;
+            }
+        }
+
+        public bool UnlikeComment(int id)
+        {
+            using (var _connection = new SqlConnection(_connectionString))
+            {
+                var query = "UPDATE Comments SET Likes = Likes - 1 WHERE Comments.Id = @Id";
+
+                var command = new SqlCommand(query, _connection);
+
+                command.Parameters.AddWithValue("@Id", id);
+
+                _connection.Open();
+
+                var result = command.ExecuteNonQuery();
+
+                return result > 0;
+            }
         }
 
         public IEnumerable<Comment> GetAllComments()
@@ -49,7 +84,7 @@ namespace Epam.NewsService.SqlDAL
         public IEnumerable<Comment> GetCommentsByArticleId(int articleId)
         {
             return ExecuteStoredProcedure(
-                            "GetComments",
+                            "GetCommentsByArticleId",
                             new ProcedureParameter("@ArticleId", articleId));
         }
 
@@ -72,12 +107,16 @@ namespace Epam.NewsService.SqlDAL
 
         public static Comment CreateCommentFromReader(SqlDataReader reader)
         {
+            DateTime? editedTime = (DateTime?)(reader.IsDBNull(4) ? null : reader[4]);
+
             return new Comment(
                 (int)reader["CommentId"],
+                (int)reader["ArticleId"],
                 SqlUserDAO.CreateUserFromReader(reader),
-                (DateTime)reader["CreationTime"],
-                (DateTime)reader["EditedTime"],
-                (string)reader["Content"]);
+                (DateTime)reader["CommentCreationTime"],
+                editedTime,
+                (string)reader["Content"],
+                (int)reader["CommentLikes"]);
         }
 
         private IEnumerable<Comment> ExecuteStoredProcedure(string procedureName, params ProcedureParameter[] parameters)
@@ -106,7 +145,6 @@ namespace Epam.NewsService.SqlDAL
             }
         }
     }
-
 
     struct ProcedureParameter
     {

@@ -5,7 +5,7 @@ namespace Epam.NewsService.BLL.Interfaces
 {
     public interface IArticleLogic
     {
-        bool AddArticle(Article article);
+        bool AddArticle(string title, string text, string introImageLink, Category category, User moderator, string[] tags);
         bool RemoveArticle(int id);
         void EditArticle(int id, User moderator, string newText = null, string newTitle = null, string newIntroImageLink = null);
         Article GetArticleById(int id);

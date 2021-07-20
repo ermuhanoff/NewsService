@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="IArticleLogic.cs" />
     <Compile Include="ICategoryLogic.cs" />
+    <Compile Include="ICommentLogic.cs" />
     <Compile Include="IUserLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

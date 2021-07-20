@@ -23,7 +23,7 @@ namespace Epam.NewsService.SqlDAL
                 command.Parameters.AddWithValue("@Title", article.Title);
                 command.Parameters.AddWithValue("@CreationTime", article.CreationTime);
                 command.Parameters.AddWithValue("@ModeratorId", article.Moderator.Id);
-                command.Parameters.AddWithValue("@IntroImageLink", article.Moderator.Id);
+                command.Parameters.AddWithValue("@IntroImageLink", article.IntroImageLink);
                 command.Parameters.AddWithValue("@CategoryId", article.Category.Id);
                 command.Parameters.AddWithValue("@Likes", article.Likes);
 
@@ -157,7 +157,20 @@ namespace Epam.NewsService.SqlDAL
 
         public bool RemoveArticle(int id)
         {
-            throw new NotImplementedException();
+            using (var _connection = new SqlConnection(_connectionString))
+            {
+                var query = "DELETE FROM Articles WHERE Articles.Id = @ArticleId";
+
+                var command = new SqlCommand(query, _connection);
+
+                command.Parameters.AddWithValue("@ArticleId", id);
+
+                _connection.Open();
+
+                var result = command.ExecuteNonQuery();
+
+                return result > 0;
+            }
         }
 
         public void EditArticle(int id, User moderator, string newText = null, string newTitle = null, string newIntroImageLink = null)

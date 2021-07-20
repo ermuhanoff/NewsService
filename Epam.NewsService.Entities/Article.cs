@@ -5,7 +5,7 @@ namespace Epam.NewsService.Entities
 {
     public class Article
     {
-        public Article(int id, string title, string text, User moderator, string introImageLink, Category category, string[] tags)
+        public Article(string title, string text, User moderator, string introImageLink, Category category, string[] tags)
         {
             Title = title;
             Text = text;
@@ -14,7 +14,7 @@ namespace Epam.NewsService.Entities
             Category = category;
             Tags = tags;
 
-            Id = id;
+            Id = -1;
             CreationTime = DateTime.Now;
             Comments = new List<Comment>();
             Likes = 0;

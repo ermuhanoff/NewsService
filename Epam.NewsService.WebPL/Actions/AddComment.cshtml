@@ -1,0 +1,28 @@
+﻿@using Epam.NewsService.Dependencies
+
+@{
+    bool isAddCommentError = true;
+
+    try
+    {
+        string content = Request["content"];
+        int articleId = -1;
+
+        Int32.TryParse(Request["artilceId"], out articleId);
+
+        var user = DependencyResolver.Instance.UserLogic.GetUserByEmail(User.Identity.Name);
+
+        isAddCommentError = !DependencyResolver.Instance.CommentLogic.AddComment(content, user, articleId);
+
+        Response.SetStatus(200);
+    }
+    catch
+    {
+        Response.SetStatus(500);
+    }
+
+    if (isAddCommentError)
+    {
+        Response.SetStatus(500);
+    }
+}

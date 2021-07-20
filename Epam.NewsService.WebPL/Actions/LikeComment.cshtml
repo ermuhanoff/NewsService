@@ -1,6 +1,39 @@
-﻿@{
-    if (!User.Identity.IsAuthenticated)
+﻿@using Epam.NewsService.Dependencies
+
+@{
+    string typeSetLike = "0";
+    int commentId = -1;
+
+    try
     {
-        Response.SetStatus(401);
+
+        Int32.TryParse(Request["commentId"], out commentId);
+
+        if (!User.Identity.IsAuthenticated)
+        {
+            Response.SetStatus(401);
+        }
+        else
+        {
+            bool isLikeError = false;
+
+            if (Request["type"] == typeSetLike)
+            {
+                isLikeError = !DependencyResolver.Instance.CommentLogic.LikeComment(commentId);
+            }
+            else
+            {
+                isLikeError = !DependencyResolver.Instance.CommentLogic.UnlikeComment(commentId);
+            }
+
+            if (isLikeError)
+            {
+                throw new Exception();
+            }
+        }
+    }
+    catch
+    {
+        Response.SetStatus(500);
     }
 }
