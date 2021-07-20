@@ -1,0 +1,61 @@
+﻿@{
+    bool isArticlesEmpty = true;
+}
+
+<section class="d-flex p-2 mt-3 justify-content-start">
+    <div class="container p-0 m-0 mt-2 pe-2" style="max-width: 20% ; min-width: 190px">
+        @RenderPage("~/Views/Partials/_LeftMenuPartial.cshtml")
+    </div>
+    <div class="container-fluid p-0 m-0 mt-2" style="max-width: 60% ; min-width: 400px">
+        @RenderPage("~/Views/Partials/_TopMenuPartial.cshtml")
+
+        @if (Request.Params["id"] == null)
+        {
+            <ul class="list-group">
+                @foreach (var article in PageData["articles"])
+                {
+                    isArticlesEmpty = false;
+
+                    PageData["article"] = article;
+
+                    <li class="list-group-item border-0 p-0 pb-2">
+                        @RenderPage("~/Views/Partials/_ArticlePartial.cshtml")
+                    </li>
+                }
+            </ul>
+            if (isArticlesEmpty)
+            {
+                <p class="d-flex justify-content-center align-items-center fs-4 p-4 text-secondary fw-bold">
+                    No articles in this section!
+                </p>
+            }
+        }
+        else
+        {
+            <div class="pb-2">
+                @RenderPage("~/Views/Partials/_ArticlePartial.cshtml")
+            </div>
+            <div class="pb-2">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <form action="/" method="post">
+                        <label for="comment-content" class="form-label fs-3 py-4">Add new comment:</label>
+                        <textarea class="form-control mb-3" id="comment-content" rows="3" value=""></textarea>
+                        <button class="btn btn-dark" type="submit">Send</button>
+                    </form>
+                    <p class="fs-3 py-4">Comments:</p>
+                    for (var i = 0; i < 10; i++)
+                    {
+                        @RenderPage("~/Views/Partials/_CommentPartial.cshtml")
+                    }
+                }
+                else
+                {
+                    <div class="d-flex justify-content-center align-items-center mt-3">
+                        <p class="fs-4">Please <a href="~/Views/Pages/SignIn">SignIn</a> to view and add comments!</p>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</section>

@@ -1,0 +1,15 @@
+﻿@{
+    Layout = "~/Views/Layouts/_BasicLayout.cshtml";
+
+    PageData["pageName"] = "About";
+}
+
+@section header{
+    @RenderPage("~/Views/Partials/_HeaderMenuPartial.cshtml")
+}
+
+<section class="d-flex justify-content-center align-items-center p-2 mt-3 vh-100">
+    <p class="fs-3">
+        This is about page!
+    </p>
+</section>

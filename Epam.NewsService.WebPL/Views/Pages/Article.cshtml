@@ -1,0 +1,22 @@
+﻿@using Epam.NewsService.Dependencies
+
+@{
+    Layout = "~/Views/Layouts/_BasicLayout.cshtml";
+
+    int id;
+
+    Int32.TryParse(Request.Params["id"], out id);
+
+    var article = DependencyResolver.Instance.ArticleLogic.GetArticleById(id);
+
+    PageData["pageName"] = article.Title;
+
+    PageData["article"] = article;
+}
+
+@section header{
+    @RenderPage("~/Views/Partials/_HeaderMenuPartial.cshtml")
+}
+
+
+@RenderPage("~/Views/Partials/_MainPagePartial.cshtml")

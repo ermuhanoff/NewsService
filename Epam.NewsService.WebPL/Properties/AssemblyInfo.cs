@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // Управление общими сведениями о сборке осуществляется с помощью 
 // набора атрибутов. Измените значения этих атрибутов для изменения сведений,
 // связанных с этой сборкой.
-[assembly: AssemblyTitle("Epam.NewsService.WebPL")]
+[assembly: AssemblyTitle("Epma.NewsService.WebPL")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Epam.NewsService.WebPL")]
+[assembly: AssemblyProduct("Epma.NewsService.WebPL")]
 [assembly: AssemblyCopyright("Copyright ©  2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // Следующий GUID служит для идентификации библиотеки типов typelib, если этот проект видим для COM
-[assembly: Guid("7454b8f2-e64a-4ba9-bd3d-eb6618fedb27")]
+[assembly: Guid("1bd4f6a2-e65f-4ee3-9916-f6be7f295224")]
 
 // Сведения о версии сборки состоят из указанных ниже четырех значений:
 //

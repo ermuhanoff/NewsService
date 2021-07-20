@@ -1,0 +1,15 @@
+﻿@using Epam.NewsService.BLL
+
+@{
+    if (IsPost)
+    {
+        if (Request["type"] == "top")
+        {
+            Response.Write(ArticleLogic.GetArticles());
+        }
+        else
+        {
+            Response.Write(ArticleLogic.GetFollowArticles());
+        }
+    }
+}

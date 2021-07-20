@@ -1,0 +1,25 @@
+﻿@using Epam.NewsService.Dependencies
+
+@{
+    Layout = "~/Views/Layouts/_BasicLayout.cshtml";
+
+    PageData["pageName"] = "Follow news";
+
+    PageData["articles"] = DependencyResolver.Instance.ArticleLogic.GetFollowArticles();
+
+    if (IsPost)
+    {
+
+    }
+    else if (IsAjax)
+    {
+
+    }
+}
+
+@section header{
+    @RenderPage("~/Views/Partials/_HeaderMenuPartial.cshtml")
+}
+
+
+@RenderPage("~/Views/Partials/_MainPagePartial.cshtml")

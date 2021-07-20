@@ -1,0 +1,44 @@
+﻿@{
+    if (IsAjax)
+    {
+
+    }
+    if (IsPost)
+    {
+
+    }
+}
+
+<nav class="rounded border px-2 py-1 ">
+    <div class="container py-3 d-flex justify-content-around border-bottom">
+        @if (!User.Identity.IsAuthenticated)
+        {
+            <a href="~/Views/Pages/AccountCreation" class="btn btn-outline-dark signin">Create Account</a>
+            <a href="~/Views/Pages/SignIn" class="btn btn-dark login">SignIn</a>
+        }
+        else
+        {
+            <div class="d-flex flex-column">
+                <div class="d-flex align-items-center justify-content-between">
+                    <p class="fs-6 text-truncate" style="max-width: 150px">Oleg Paclovasdas</p>
+                    @if (User.IsInRole("moderator"))
+                    {
+                        <p class="text-secondary text-warning ms-2" style="font-size: 0.7em">MODERATOR</p>
+                    }
+                </div>
+                <div class="d-flex align-items-center justify-content-center">
+                    <a href="~/Views/Pages/User" class="col btn btn-outline-dark viewpage text-nowrap me-2">View page</a>
+                    <a href="~/Actions/SignOut" class="col btn btn-outline-dark login">SignOut</a>
+                </div>
+            </div>
+        }
+    </div>
+    <ul class="nav flex-column">
+        @for (int i = 0; i < 10; i++)
+        {
+            <li class="nav-item">
+                <a class="nav-link py-1 text-secondary left-menu-cat" aria-current="page" href="#">Active</a>
+            </li>
+        }
+    </ul>
+</nav>

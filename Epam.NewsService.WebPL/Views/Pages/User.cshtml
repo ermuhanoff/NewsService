@@ -1,0 +1,89 @@
+﻿@{
+    Layout = "~/Views/Layouts/_BasicLayout.cshtml";
+
+    PageData["pageName"] = "User page";
+
+    var followCategories = new string[] {  };
+
+    bool isCategoriesEmpty = true;
+}
+
+@section header{
+    @RenderPage("~/Views/Partials/_HeaderMenuPartial.cshtml")
+}
+
+<section class="d-flex justify-content-center align-items-center p-2 mt-3">
+    <div class="container" style="width: 60%">
+        <div class="user-data d-flex">
+            <div class="user-data-col d-flex flex-column align-items-center" style="width: 50%">
+                <div class="row">
+                    <div class="col-7"><i data-feather="user" style="width: 200px; height: 200px"></i></div>
+                </div>
+                <div class="row">
+                    <div class="col-7"><p class="fs-4 fw-bold mt-4">MODERATOR</p></div>
+                </div>
+            </div>
+            <div class="user-data-col d-flex flex-column w-50">
+                <div class="row">
+                    <div class="col d-flex">
+                        <div class="me-3">
+                            <label for="firstname" class="form-label">First name</label>
+                            <input class="form-control" type="text" value="Oleg" id="firstname" readonly>
+                        </div>
+                        <div>
+                            <label for="lastname" class="form-label">Last name</label>
+                            <input class="form-control" type="text" id="lastname" value="Pavlov" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col">
+                        <label for="email" class="form-label">Email address</label>
+                        <input class="form-control" type="email" value="email@mail.com" id="email" readonly>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col">
+                        <p class="fs-3 fw-bold">Follow categories</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <ul class="list-group overflow-auto" style="max-height: 150px">
+                            @foreach (var category in followCategories)
+                            {
+                                isCategoriesEmpty = false;
+
+                                <li class="list-group-item border-0 p-0 pb-2">
+                                    <a href="#" class="text-warning fs-5 text-decoration-none">@category</a>
+                                </li>
+                            }
+                        </ul>
+                        @if (isCategoriesEmpty)
+                        {
+                            <p class="fs-5">No follow categories!</p>
+                        }
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col">
+                        <p class="fs-3 fw-bold">Functions</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <a href="~/Actions/SignOut" class="btn btn-outline-dark">SingOut</a>
+                    </div>
+                </div>
+                @if (User.IsInRole("moderator"))
+                {
+                    <div class="row mt-3">
+                        <div class="col">
+                            <a href="~/Views/Pages/AddArticle" class="btn btn-outline-dark">Add artcile</a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>

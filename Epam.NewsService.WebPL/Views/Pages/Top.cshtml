@@ -1,0 +1,16 @@
+﻿@using Epam.NewsService.Dependencies
+
+@{
+    Layout = "~/Views/Layouts/_BasicLayout.cshtml";
+
+    PageData["pageName"] = "Top news";
+
+    PageData["articles"] = DependencyResolver.Instance.ArticleLogic.GetAllArticles();
+}
+
+@section header{
+    @RenderPage("~/Views/Partials/_HeaderMenuPartial.cshtml")
+}
+
+
+@RenderPage("~/Views/Partials/_MainPagePartial.cshtml")

@@ -1,0 +1,42 @@
+﻿@using Epam.NewsService.Dependencies;
+
+@{
+    Layout = "~/Views/Layouts/_BasicLayout.cshtml";
+
+    PageData["pageName"] = "Search";
+
+    string queryString = Request.Params["query"];
+
+    var articles = DependencyResolver.Instance.ArticleLogic.GetArticlesByTitle(queryString);
+
+    bool isArticlesEmpty = true;
+
+}
+
+@section header{
+    @RenderPage("~/Views/Partials/_HeaderMenuPartial.cshtml")
+}
+
+<section class="p-2 mt-3">
+    <div class="container" style="width: 60%">
+        <p class="fs-3 mb-5 pb-2 border-bottom">Articles from query '@queryString':</p>
+        <ul class="list-group">
+            @foreach (var article in articles)
+            {
+                isArticlesEmpty = false;
+
+                PageData["article"] = article;
+
+                <li class="list-group-item border-0 p-0 pb-2">
+                    @RenderPage("~/Views/Partials/_ArticlePartial.cshtml")
+                </li>
+            }
+        </ul>
+        @if (isArticlesEmpty)
+        {
+            <p class="d-flex justify-content-center align-items-center fs-4 p-4 text-secondary fw-bold">
+                No articles from query '@queryString'!
+            </p>
+        }
+    </div>
+</section>

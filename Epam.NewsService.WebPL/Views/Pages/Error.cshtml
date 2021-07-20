@@ -1,0 +1,19 @@
+﻿@{
+    Layout = "~/Views/Layouts/_BasicLayout.cshtml";
+
+    PageData["pageName"] = "Ooops...";
+}
+
+@section header{
+    @RenderPage("~/Views/Partials/_HeaderMenuPartial.cshtml")
+}
+
+
+<section class="d-flex justify-content-center align-items-center flex-column p-2 mt-3 vh-100">
+    <p class="fw-bold fs-2">
+        An unexpected <span class="text-danger">error</span class="text-danger"> occurred! Is`t ok, keep clam!
+    </p>
+    <p class="fs-5 text-secondary">
+        Just go to <a href="/">home page</a>!
+    </p>
+</section>

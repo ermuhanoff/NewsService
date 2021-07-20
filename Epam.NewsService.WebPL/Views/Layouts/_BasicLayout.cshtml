@@ -1,0 +1,28 @@
+﻿@{
+    Response.TrySkipIisCustomErrors = true;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/index.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.6.0.min.js"></script>
+    <title>@PageData["pageName"]</title>
+</head>
+<body>
+    <main>
+        @RenderSection("header", required: false)
+        <article>
+            @RenderBody()
+        </article>
+        @RenderSection("footer", required: false)
+    </main>
+
+    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+    <script src="~/Scripts/feather.min.js"></script>
+    <script src="~/Scripts/index.js"></script>
+</body>
+</html>

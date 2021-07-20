@@ -1,0 +1,10 @@
+﻿@{
+    if (!User.Identity.IsAuthenticated)
+    {
+        Response.SetStatus(401);
+    }
+    else
+    {
+        Response.SetStatus(500);
+    }
+}
